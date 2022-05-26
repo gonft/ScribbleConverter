@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import ScribbleConverter
+import PencilKit
+import SwiftProtobuf
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // PKDrawing data를 Scribble 데이터 변환하는 예시 입니다
+        // 여기서 반환된 data를 사용가능한 Scribble(proto3) 객체는 공유하지 않고 있습니다
+        let pkDrawing = PKDrawing()
+        _ = ScribbleConverter.scribbleFrom(drawingData: pkDrawing.dataRepresentation())
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,4 +28,3 @@ class ViewController: UIViewController {
     }
 
 }
-

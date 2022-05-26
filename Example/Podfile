@@ -7,7 +7,5 @@ target 'ScribbleConverter_Example' do
 
   target 'ScribbleConverter_Tests' do
     inherit! :search_paths
-
-    
   end
 end

@@ -1,0 +1,6 @@
+framework module ScribbleConverter {
+  umbrella header "ScribbleConverter-umbrella.h"
+
+  export *
+  module * { export * }
+}
