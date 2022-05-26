@@ -1,6 +1,6 @@
 {
   "name": "ScribbleConverter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,19 +12,19 @@
   },
   "source": {
     "git": "https://github.com/gonft/ScribbleConverter.git",
-    "tag": "0.1.0"
+    "tag": "0.2.0"
   },
   "platforms": {
-    "ios": "10.0",
-    "osx": "10.11"
+    "ios": "14.0",
+    "osx": "11.0"
   },
-  "source_files": "ScribbleConverter/Classes/**/*.swift",
+  "source_files": "ScribbleConverter/Sources/ScribbleConverter/*.swift",
   "swift_versions": [
     "5.0"
   ],
   "dependencies": {
     "SwiftProtobuf": [
-      "~> 1.0"
+      "~> 1.19.0"
     ]
   },
   "swift_version": "5.0"

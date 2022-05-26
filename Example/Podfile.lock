@@ -1,6 +1,6 @@
 PODS:
-  - ScribbleConverter (0.1.0):
-    - SwiftProtobuf (~> 1.0)
+  - ScribbleConverter (0.2.0):
+    - SwiftProtobuf (~> 1.19.0)
   - SwiftProtobuf (1.19.0)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ScribbleConverter: 9bb5f0a554552a1d73da90b1656f641a736039d2
+  ScribbleConverter: 118a2f7d99a66354a7b0342cd98257d103447ca9
   SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
 
 PODFILE CHECKSUM: 438c66f6fcdf3b5d53f6645e8aa4537dedd2bf7c
