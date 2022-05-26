@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ScribbleConverter: 118a2f7d99a66354a7b0342cd98257d103447ca9
+  ScribbleConverter: 75f7d3b1f712fd0c03de396d3a40d1599e433c9b
   SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
 
 PODFILE CHECKSUM: 438c66f6fcdf3b5d53f6645e8aa4537dedd2bf7c

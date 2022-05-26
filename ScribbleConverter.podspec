@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ScribbleConverter'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.license = 'MIT'
   s.summary          = 'A tool to convert Apple PencilKit data to Scribble Proto3.'
   s.homepage         = 'https://github.com/gonft/ScribbleConverter'
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '14.0'
   s.osx.deployment_target = '11.0'
 
-  s.source_files = 'ScribbleConverter/Sources/ScribbleConverter/*.swift'
+  s.source_files = 'Sources/ScribbleConverter/*.swift'
   s.swift_versions = ['5.0']
   
   s.dependency 'SwiftProtobuf', '~> 1.19.0'
