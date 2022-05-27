@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         // 여기서 반환된 data를 사용가능한 Scribble(proto3) 객체는 공유하지 않고 있습니다
         let pkDrawing = PKDrawing()
         _ = ScribbleConverter.scribbleFrom(drawingData: pkDrawing.dataRepresentation())
+        // OR
+        _ = ScribbleConverter.scribbleFrom(pkDrawing: pkDrawing)
     }
 
     override func didReceiveMemoryWarning() {

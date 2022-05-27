@@ -29,6 +29,24 @@ public final class ScribbleConverter {
         return nil
     }
     
+    public static func scribbleFrom(pkDrawing drawing: PKDrawing) -> Data? {
+        do {
+            if #available(iOS 14.0, *) {
+                let scribble = Scribble.with{ s in
+                    s.width = drawing.bounds.width * scale;
+                    s.height = drawing.bounds.height * scale;
+                    s.strokes = getLines(drawing: drawing);
+                }
+                return try scribble.serializedData()
+            } else {
+                print("not available pencilkit")
+            }
+        } catch {
+            print("pencilkit data convert failed")
+        }
+        return nil
+    }
+    
     @available(iOS 14.0, *)
     private static func getLines(drawing: PKDrawing) -> [Stroke] {
         
