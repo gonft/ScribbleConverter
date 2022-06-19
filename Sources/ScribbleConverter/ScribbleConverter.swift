@@ -8,12 +8,13 @@
 import PencilKit
 
 public final class ScribbleConverter {
-    static let scale = 5.975
+    var scale = 0.0
     
-    public static func scribbleFrom(drawingData data: Data) -> Data? {
+    public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat) -> Data? {
         do {
             if #available(iOS 14.0, *) {
                 let drawing = try PKDrawing.init(data: Data(data))
+                scale = imageWidth * 0.003703703703704
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
@@ -29,9 +30,10 @@ public final class ScribbleConverter {
         return nil
     }
     
-    public static func scribbleFrom(pkDrawing drawing: PKDrawing) -> Data? {
+    public static func scribbleFrom(pkDrawing drawing: PKDrawing, imageWidth: CGFloat) -> Data? {
         do {
             if #available(iOS 14.0, *) {
+                scale = imageWidth * 0.003703703703704
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
