@@ -7,8 +7,8 @@
 #endif
 import PencilKit
 
-public final class ScribbleConverter {
-    var scale = 0.0
+public class ScribbleConverter {
+    private static var scale = 0.0
     
     public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat) -> Data? {
         do {

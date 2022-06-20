@@ -19,9 +19,9 @@ class ViewController: UIViewController {
         // PKDrawing data를 Scribble 데이터 변환하는 예시 입니다
         // 여기서 반환된 data를 사용가능한 Scribble(proto3) 객체는 공유하지 않고 있습니다
         let pkDrawing = PKDrawing()
-        _ = ScribbleConverter.scribbleFrom(drawingData: pkDrawing.dataRepresentation())
+        _ = ScribbleConverter.scribbleFrom(drawingData: pkDrawing.dataRepresentation(), imageWidth: 1024)
         // OR
-        _ = ScribbleConverter.scribbleFrom(pkDrawing: pkDrawing)
+        _ = ScribbleConverter.scribbleFrom(pkDrawing: pkDrawing, imageWidth: 1024)
     }
 
     override func didReceiveMemoryWarning() {
