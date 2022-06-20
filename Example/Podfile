@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '14.0'
 
 target 'ScribbleConverter_Example' do
   pod 'ScribbleConverter', :path => '../'
