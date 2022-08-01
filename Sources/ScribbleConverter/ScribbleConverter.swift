@@ -65,7 +65,7 @@ public class ScribbleConverter {
                     p1.azimuth = p0.azimuth;
                     p1.opacity = p0.opacity;
                     p1.size = [p0.size.width, p0.size.height];
-                    p1.timestamp = p0.timeOffset;
+                    p1.timestamp = Int64(p0.timeOffset);
                 }
             }
             let inkType = stroke.ink.inkType.rawValue.components(separatedBy: ".").last ?? "Unkown"
@@ -89,7 +89,7 @@ public class ScribbleConverter {
                             p1.azimuth = p0.azimuth;
                             p1.opacity = p0.opacity;
                             p1.size = [p0.size.width, p0.size.height];
-                            p1.timestamp = p0.timeOffset;
+                            p1.timestamp = Int64(p0.timeOffset);
                         }
                     }
                     break
@@ -105,7 +105,7 @@ public class ScribbleConverter {
                             p1.azimuth = p0.azimuth;
                             p1.opacity = p0.opacity;
                             p1.size = [p0.size.width, p0.size.height];
-                            p1.timestamp = p0.timeOffset;
+                            p1.timestamp = Int64(p0.timeOffset);
                         }
                     }
                     break
