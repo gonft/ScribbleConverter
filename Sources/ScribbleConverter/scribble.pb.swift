@@ -46,7 +46,9 @@ struct Point {
   var size: [Double] = []
 
   //// The timestamp for this point.
-  var timestamp: Double = 0
+  var deprecatedTimestamp: Double = 0
+
+  var timestamp: Int64 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -187,6 +189,10 @@ struct Scribble {
 
   var strokes: [Stroke] = []
 
+  var updatedAt: String = String()
+
+  var createdAt: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -215,7 +221,8 @@ extension Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
     5: .same(proto: "azimuth"),
     6: .same(proto: "opacity"),
     7: .same(proto: "size"),
-    8: .same(proto: "timestamp"),
+    8: .standard(proto: "deprecated_timestamp"),
+    9: .same(proto: "timestamp"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -231,7 +238,8 @@ extension Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
       case 5: try { try decoder.decodeSingularDoubleField(value: &self.azimuth) }()
       case 6: try { try decoder.decodeSingularDoubleField(value: &self.opacity) }()
       case 7: try { try decoder.decodeRepeatedDoubleField(value: &self.size) }()
-      case 8: try { try decoder.decodeSingularDoubleField(value: &self.timestamp) }()
+      case 8: try { try decoder.decodeSingularDoubleField(value: &self.deprecatedTimestamp) }()
+      case 9: try { try decoder.decodeSingularInt64Field(value: &self.timestamp) }()
       default: break
       }
     }
@@ -259,8 +267,11 @@ extension Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
     if !self.size.isEmpty {
       try visitor.visitPackedDoubleField(value: self.size, fieldNumber: 7)
     }
+    if self.deprecatedTimestamp != 0 {
+      try visitor.visitSingularDoubleField(value: self.deprecatedTimestamp, fieldNumber: 8)
+    }
     if self.timestamp != 0 {
-      try visitor.visitSingularDoubleField(value: self.timestamp, fieldNumber: 8)
+      try visitor.visitSingularInt64Field(value: self.timestamp, fieldNumber: 9)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -273,6 +284,7 @@ extension Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
     if lhs.azimuth != rhs.azimuth {return false}
     if lhs.opacity != rhs.opacity {return false}
     if lhs.size != rhs.size {return false}
+    if lhs.deprecatedTimestamp != rhs.deprecatedTimestamp {return false}
     if lhs.timestamp != rhs.timestamp {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -523,6 +535,8 @@ extension Scribble: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     1: .same(proto: "width"),
     2: .same(proto: "height"),
     3: .unique(proto: "strokes", json: "lines"),
+    4: .same(proto: "updatedAt"),
+    5: .same(proto: "createdAt"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -534,6 +548,8 @@ extension Scribble: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
       case 1: try { try decoder.decodeSingularDoubleField(value: &self._width) }()
       case 2: try { try decoder.decodeSingularDoubleField(value: &self._height) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.strokes) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.updatedAt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.createdAt) }()
       default: break
       }
     }
@@ -553,6 +569,12 @@ extension Scribble: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     if !self.strokes.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.strokes, fieldNumber: 3)
     }
+    if !self.updatedAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.updatedAt, fieldNumber: 4)
+    }
+    if !self.createdAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.createdAt, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -560,6 +582,8 @@ extension Scribble: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     if lhs._width != rhs._width {return false}
     if lhs._height != rhs._height {return false}
     if lhs.strokes != rhs.strokes {return false}
+    if lhs.updatedAt != rhs.updatedAt {return false}
+    if lhs.createdAt != rhs.createdAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
