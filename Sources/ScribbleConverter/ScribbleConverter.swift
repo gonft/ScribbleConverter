@@ -72,7 +72,7 @@ public class ScribbleConverter {
             let inkType = stroke.ink.inkType.rawValue.components(separatedBy: ".").last ?? "Unkown"
             var lineWidth = 1.0
             if( (scale / kRatio) < 300 ) {
-                lineWidth = 1.0 * ((scale / kRatio) / 1500)
+                lineWidth = 1.0 * ((scale / kRatio) / 1000)
             }
             let thinning = 0.5
             let smoothing = 0.5
