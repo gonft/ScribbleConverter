@@ -9,12 +9,13 @@ import PencilKit
 
 public class ScribbleConverter {
     private static var scale = 0.0
+    private static let kRatio = 0.003703703703704
     
     public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat) -> Data? {
         do {
             if #available(iOS 14.0, *) {
                 let drawing = try PKDrawing.init(data: Data(data))
-                scale = imageWidth * 0.003703703703704
+                scale = imageWidth * kRatio
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
@@ -33,7 +34,7 @@ public class ScribbleConverter {
     public static func scribbleFrom(pkDrawing drawing: PKDrawing, imageWidth: CGFloat) -> Data? {
         do {
             if #available(iOS 14.0, *) {
-                scale = imageWidth * 0.003703703703704
+                scale = imageWidth * kRatio
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
@@ -69,7 +70,7 @@ public class ScribbleConverter {
                 }
             }
             let inkType = stroke.ink.inkType.rawValue.components(separatedBy: ".").last ?? "Unkown"
-            var lineWidth = 1.0
+            var lineWidth = 1.0 * ((scale / kRatio) / 2000)
             let thinning = 0.5
             let smoothing = 0.5
             let streamline = 0.5
