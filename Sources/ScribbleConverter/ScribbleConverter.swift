@@ -11,7 +11,7 @@ public class ScribbleConverter {
     private static var scale = 0.0
     private static let kRatio = 0.003703703703704
     
-    public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat) -> Data? {
+    public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat, offsetY: CGFloat = 0.0) -> Data? {
         do {
             if #available(iOS 14.0, *) {
                 let drawing = try PKDrawing.init(data: Data(data))
@@ -19,7 +19,7 @@ public class ScribbleConverter {
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
-                    s.strokes = getLines(drawing: drawing);
+                    s.strokes = getLines(drawing: drawing, offsetY: offsetY);
                 }
                 return try scribble.serializedData()
             } else {
@@ -31,14 +31,14 @@ public class ScribbleConverter {
         return nil
     }
     
-    public static func scribbleFrom(pkDrawing drawing: PKDrawing, imageWidth: CGFloat) -> Data? {
+    public static func scribbleFrom(pkDrawing drawing: PKDrawing, imageWidth: CGFloat, offsetY: CGFloat = 0.0) -> Data? {
         do {
             if #available(iOS 14.0, *) {
                 scale = imageWidth * kRatio
                 let scribble = Scribble.with{ s in
                     s.width = drawing.bounds.width * scale;
                     s.height = drawing.bounds.height * scale;
-                    s.strokes = getLines(drawing: drawing);
+                    s.strokes = getLines(drawing: drawing, offsetY: offsetY);
                 }
                 return try scribble.serializedData()
             } else {
@@ -51,7 +51,7 @@ public class ScribbleConverter {
     }
     
     @available(iOS 14.0, *)
-    private static func getLines(drawing: PKDrawing) -> [Stroke] {
+    private static func getLines(drawing: PKDrawing, offsetY: CGFloat = 0.0) -> [Stroke] {
         
         let formatter = ISO8601DateFormatter()
         var lines = [Stroke]()
@@ -60,7 +60,7 @@ public class ScribbleConverter {
             var points = stroke.path.map{ p0 in
                 Point.with{ p1 in
                     p1.x = (p0.location.x) * scale;
-                    p1.y = (p0.location.y) * scale;
+                    p1.y = (p0.location.y + offsetY) * scale;
                     p1.p = p0.force * 0.5;
                     p1.altitude = p0.altitude;
                     p1.azimuth = p0.azimuth;
@@ -87,7 +87,7 @@ public class ScribbleConverter {
                     points = stroke.path.map{ p0 in
                         Point.with{ p1 in
                             p1.x = (p0.location.x) * scale;
-                            p1.y = (p0.location.y) * scale;
+                            p1.y = (p0.location.y + offsetY) * scale;
                             p1.p = 1.0;
                             p1.altitude = p0.altitude;
                             p1.azimuth = p0.azimuth;
@@ -103,7 +103,7 @@ public class ScribbleConverter {
                     points = stroke.path.map{ p0 in
                         Point.with{ p1 in
                             p1.x = (p0.location.x) * scale;
-                            p1.y = (p0.location.y) * scale;
+                            p1.y = (p0.location.y + offsetY) * scale;
                             p1.p = 1.0;
                             p1.altitude = p0.altitude;
                             p1.azimuth = p0.azimuth;
