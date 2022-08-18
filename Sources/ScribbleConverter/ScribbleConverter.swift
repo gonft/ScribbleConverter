@@ -11,6 +11,38 @@ public class ScribbleConverter {
     private static var scale = 0.0
     private static let kRatio = 0.003703703703704
     
+    /// 두 Scribble 필기 데이터를 머지 합니다
+    /// - Parameters:
+    ///   - src: 원본 Scribble 필기 데이터
+    ///   - srcWidth: src 데이터 생성에 사용된 배경 이미지 가로 너비 (잘못된 너비를 사용한경우이며 기존 변환처리된 데이터를 복구하기 위해 사용 됩니다)
+    ///   - corectSize: 정확한 배경 이미지 사이즈
+    /// - Returns: 머지된 Scribble 필기 데이터
+    public static func fixScribble(src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
+        do {
+            if #available(iOS 14.0, *) {
+                let a = try Scribble.init(serializedData: src)
+                let scribble = Scribble.with { s in
+                    s.width = corectSize.width;
+                    s.height = corectSize.height;
+                    s.strokes = getLines(strokes: a.strokes, scale: corectSize.width / srcWidth)
+                }
+                
+                return try scribble.serializedData()
+            } else {
+                print("not available pencilkit")
+            }
+        } catch {
+            print("pencilkit data convert failed")
+        }
+        return nil
+    }
+    
+    /// 필기데이터 컨버팅
+    /// - Parameters:
+    ///   - data: 애플 펜슬킷 데이터
+    ///   - imageWidth: 배경 이미지 가로 너비
+    ///   - offsetY: 변경할 필기 Y축 오프셋
+    /// - Returns: 변경된 필기데이터
     public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat, offsetY: CGFloat = 0.0) -> Data? {
         do {
             if #available(iOS 14.0, *) {
@@ -48,6 +80,38 @@ public class ScribbleConverter {
             print("pencilkit data convert failed")
         }
         return nil
+    }
+
+    private static func getLines(strokes: [Stroke], scale: CGFloat) -> [Stroke] {
+        var lines = [Stroke]()
+        
+        for stroke in strokes {
+            let points = stroke.points.map{ p0 in
+                Point.with{ p1 in
+                    p1.x = p0.x * scale;
+                    p1.y = p0.y * scale;
+                    p1.p = p0.p;
+                    p1.altitude = p0.altitude;
+                    p1.azimuth = p0.azimuth;
+                    p1.opacity = p0.opacity;
+                    p1.size = p0.size;
+                    p1.timestamp = p0.timestamp;
+                }
+            }
+            
+            lines.append(
+                Stroke.with{ p0 in
+                    p0.points = points;
+                    p0.ink = stroke.ink;
+                    p0.color = stroke.color;
+                    p0.createdAt = stroke.createdAt;
+                    p0.options = stroke.options;
+                }
+            )
+            
+        }
+        
+        return lines
     }
     
     @available(iOS 14.0, *)
