@@ -30,15 +30,21 @@ public class ScribbleConverter {
                     s.strokes = getLines(
                         strokes: a.strokes.filter{
                             let createdAt = df.date(from: String($0.createdAt.prefix(19)));
-                            print("before \($0.createdAt) \(String(describing: createdAt)), \(createdAt != nil && createdAt! < updatedAt)")
-                            return createdAt != nil && createdAt! < updatedAt
+                            let result = createdAt != nil && createdAt! < updatedAt
+                            if result {
+                                print("before \($0.createdAt) \(String(describing: createdAt)), \(result)")
+                            }
+                            return result
                         },
                         scale: corectSize.width / srcWidth
                     ) + getLines(
                         strokes: a.strokes.filter{
                             let createdAt = df.date(from: String($0.createdAt.prefix(19)));
-                            print("after \($0.createdAt) \(String(describing: createdAt)), \(createdAt == nil || createdAt! > updatedAt)")
-                            return createdAt == nil || createdAt! > updatedAt
+                            let result = createdAt == nil || createdAt! > updatedAt
+                            if result {
+                                print("after \($0.createdAt) \(String(describing: createdAt)), \(result)")
+                            }
+                            return result
                         },
                         scale: 1.0
                     )
