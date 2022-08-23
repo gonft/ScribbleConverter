@@ -20,13 +20,22 @@ public class ScribbleConverter {
     public static func fixScribble(src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
         do {
             if #available(iOS 14.0, *) {
+                let formatter = ISO8601DateFormatter()
                 let a = try Scribble.init(serializedData: src)
+                let df = DateFormatter()
+                df.dateFormat = "yyyy/MM/dd HH:mm"
+                let updatedAt = df.date(from: "2022/08/16 00:00")!
                 let scribble = Scribble.with { s in
-                    s.width = corectSize.width;
-                    s.height = corectSize.height;
-                    s.strokes = getLines(strokes: a.strokes, scale: corectSize.width / srcWidth)
+                    s.width = corectSize.width
+                    s.height = corectSize.height
+                    s.strokes = getLines(
+                        strokes: a.strokes.filter{ formatter.date(from: $0.createdAt)! < updatedAt },
+                        scale: corectSize.width / srcWidth
+                    ) + getLines(
+                        strokes: a.strokes.filter{ formatter.date(from: $0.createdAt)! > updatedAt },
+                        scale: 1.0
+                    )
                 }
-                
                 return try scribble.serializedData()
             } else {
                 print("not available pencilkit")
@@ -40,7 +49,7 @@ public class ScribbleConverter {
     /// 필기데이터 컨버팅
     /// - Parameters:
     ///   - data: 애플 펜슬킷 데이터
-    ///   - imageWidth: 배경 이미지 가로 너비
+    ///   - imageWidth: 원본 이미지 가로 너비
     ///   - offsetY: 변경할 필기 Y축 오프셋
     /// - Returns: 변경된 필기데이터
     public static func scribbleFrom(drawingData data: Data, imageWidth: CGFloat, offsetY: CGFloat = 0.0) -> Data? {
