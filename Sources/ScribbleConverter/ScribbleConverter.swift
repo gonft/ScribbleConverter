@@ -30,12 +30,17 @@ public class ScribbleConverter {
                     s.height = corectSize.height
                     s.strokes = getLines(
                         strokes: a.strokes.filter{
-                            print("\($0.createdAt), \(formatter.date(from: $0.createdAt)! < updatedAt)")
-                            return formatter.date(from: $0.createdAt)! < updatedAt
+                            let createdAt = formatter.date(from: $0.createdAt);
+                            print("\($0.createdAt), \(createdAt != nil && createdAt! < updatedAt)")
+                            return createdAt != nil && createdAt! < updatedAt
                         },
                         scale: corectSize.width / srcWidth
                     ) + getLines(
-                        strokes: a.strokes.filter{ formatter.date(from: $0.createdAt)! > updatedAt },
+                        strokes: a.strokes.filter{
+                            let createdAt = formatter.date(from: $0.createdAt);
+                            print("\($0.createdAt), \(createdAt == nil || createdAt! > updatedAt)")
+                            return createdAt == nil || createdAt! > updatedAt
+                        },
                         scale: 1.0
                     )
                 }

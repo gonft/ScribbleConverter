@@ -15,6 +15,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		6528CD5E063D29BE476D7604 /* Pods_ScribbleConverter_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0E17443BB3652D5248F401 /* Pods_ScribbleConverter_Example.framework */; };
 		D76274250B4AF5A84534A624 /* Pods_ScribbleConverter_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ECB9F77BB61A33FC8F5EB55 /* Pods_ScribbleConverter_Tests.framework */; };
+		E9EA61F028B4BE12003E58E3 /* 97691_1.bin in Resources */ = {isa = PBXBuildFile; fileRef = E9EA61EF28B4BE12003E58E3 /* 97691_1.bin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		A0C920890945CDB594B45B90 /* Pods-ScribbleConverter_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScribbleConverter_Example.debug.xcconfig"; path = "Target Support Files/Pods-ScribbleConverter_Example/Pods-ScribbleConverter_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B754D5D4CA50BFB52678C1BF /* Pods-ScribbleConverter_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScribbleConverter_Tests.release.xcconfig"; path = "Target Support Files/Pods-ScribbleConverter_Tests/Pods-ScribbleConverter_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C24DF89748F654EB9794CB51 /* Pods-ScribbleConverter_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScribbleConverter_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ScribbleConverter_Tests/Pods-ScribbleConverter_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		E9EA61EF28B4BE12003E58E3 /* 97691_1.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 97691_1.bin; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				E9EA61EF28B4BE12003E58E3 /* 97691_1.bin */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -249,6 +252,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				E9EA61F028B4BE12003E58E3 /* 97691_1.bin in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
