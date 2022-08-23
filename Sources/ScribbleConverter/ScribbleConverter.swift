@@ -20,25 +20,24 @@ public class ScribbleConverter {
     public static func fixScribble(src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
         do {
             if #available(iOS 14.0, *) {
-                let formatter = ISO8601DateFormatter()
                 let a = try Scribble.init(serializedData: src)
                 let df = DateFormatter()
-                df.dateFormat = "yyyy/MM/dd HH:mm"
-                let updatedAt = df.date(from: "2022/08/16 00:00")!
+                df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let updatedAt = df.date(from: "2022/08/16T00:00:00")!
                 let scribble = Scribble.with { s in
                     s.width = corectSize.width
                     s.height = corectSize.height
                     s.strokes = getLines(
                         strokes: a.strokes.filter{
-                            let createdAt = formatter.date(from: $0.createdAt);
-                            print("before \($0.createdAt), \(createdAt != nil && createdAt! < updatedAt)")
+                            let createdAt = df.date(from: String($0.createdAt.prefix(19)));
+                            print("before \($0.createdAt) \(String(describing: createdAt)), \(createdAt != nil && createdAt! < updatedAt)")
                             return createdAt != nil && createdAt! < updatedAt
                         },
                         scale: corectSize.width / srcWidth
                     ) + getLines(
                         strokes: a.strokes.filter{
-                            let createdAt = formatter.date(from: $0.createdAt);
-                            print("after \($0.createdAt), \(createdAt == nil || createdAt! > updatedAt)")
+                            let createdAt = df.date(from: String($0.createdAt.prefix(19)));
+                            print("after \($0.createdAt) \(String(describing: createdAt)), \(createdAt == nil || createdAt! > updatedAt)")
                             return createdAt == nil || createdAt! > updatedAt
                         },
                         scale: 1.0
