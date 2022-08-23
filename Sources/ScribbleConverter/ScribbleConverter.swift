@@ -29,7 +29,10 @@ public class ScribbleConverter {
                     s.width = corectSize.width
                     s.height = corectSize.height
                     s.strokes = getLines(
-                        strokes: a.strokes.filter{ formatter.date(from: $0.createdAt)! < updatedAt },
+                        strokes: a.strokes.filter{
+                            print($0.createdAt)
+                            return formatter.date(from: $0.createdAt)! < updatedAt
+                        },
                         scale: corectSize.width / srcWidth
                     ) + getLines(
                         strokes: a.strokes.filter{ formatter.date(from: $0.createdAt)! > updatedAt },
