@@ -67,13 +67,14 @@ public class ScribbleConverter {
     ///   - corectSize: 정확한 배경 이미지 사이즈
     /// - Returns: 머지된 Scribble 필기 데이터
     public static func fixScribble(origin: Data, src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
+        print("srcWidth: \(srcWidth), corectSize: \(corectSize)")
         do {
             if #available(iOS 14.0, *) {
                 let a = try Scribble.init(serializedData: src)
                 let df = DateFormatter()
                 df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                 let updatedAt = df.date(from: "2022/08/17T00:00:00")!
-                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: srcWidth)!)
+                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: corectSize.width)!)
                 let scribble = Scribble.with { s in
                     s.width = corectSize.width
                     s.height = corectSize.height
