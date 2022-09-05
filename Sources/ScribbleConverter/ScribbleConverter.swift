@@ -59,6 +59,56 @@ public class ScribbleConverter {
         return nil
     }
     
+    /// 두 Scribble 필기 데이터를 머지 합니다
+    /// - Parameters:
+    ///   - origin: 원본 pencilkit 필기 데이터
+    ///   - src: 최신 Scribble 필기 데이터
+    ///   - srcWidth: src 데이터 생성에 사용된 배경 이미지 가로 너비 (잘못된 너비를 사용한경우이며 기존 변환처리된 데이터를 복구하기 위해 사용 됩니다)
+    ///   - corectSize: 정확한 배경 이미지 사이즈
+    /// - Returns: 머지된 Scribble 필기 데이터
+    public static func fixScribble(origin: Data, src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
+        do {
+            if #available(iOS 14.0, *) {
+                let a = try Scribble.init(serializedData: src)
+                let df = DateFormatter()
+                df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let updatedAt = df.date(from: "2022/08/17T00:00:00")!
+                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: corectSize.width)!)
+                let scribble = Scribble.with { s in
+                    s.width = corectSize.width
+                    s.height = corectSize.height
+                    s.strokes = getLines(
+                        strokes: originScribble.strokes.filter{
+                            let createdAt = df.date(from: String($0.createdAt.prefix(19)));
+                            let result = createdAt != nil && createdAt! < updatedAt
+                            if result {
+                                print("before \($0.createdAt) \(String(describing: createdAt)), \(result)")
+                            }
+                            return result
+                        },
+                        scale: corectSize.width / srcWidth
+                    ) + getLines(
+                        strokes: a.strokes.filter{
+                            let createdAt = df.date(from: String($0.createdAt.prefix(19)));
+                            let result = createdAt == nil || createdAt! > updatedAt
+                            if result {
+                                print("after \($0.createdAt) \(String(describing: createdAt)), \(result)")
+                            }
+                            return result
+                        },
+                        scale: 1.0
+                    )
+                }
+                return try scribble.serializedData()
+            } else {
+                print("not available pencilkit")
+            }
+        } catch {
+            print("pencilkit data convert failed")
+        }
+        return nil
+    }
+    
     /// 필기데이터 컨버팅
     /// - Parameters:
     ///   - data: 애플 펜슬킷 데이터
