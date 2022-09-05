@@ -86,7 +86,7 @@ public class ScribbleConverter {
                             }
                             return result
                         },
-                        scale: corectSize.width / srcWidth
+                        scale: 1.0
                     ) + getLines(
                         strokes: a.strokes.filter{
                             let createdAt = df.date(from: String($0.createdAt.prefix(19)));
