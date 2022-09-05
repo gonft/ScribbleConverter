@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ScribbleConverter'
-  s.version          = '0.4.1'
+  s.version          = '0.4.2'
   s.license = 'MIT'
   s.summary          = 'A tool to convert Apple PencilKit data to Scribble Proto3.'
   s.homepage         = 'https://github.com/gonft/ScribbleConverter'

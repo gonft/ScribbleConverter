@@ -73,7 +73,7 @@ public class ScribbleConverter {
                 let df = DateFormatter()
                 df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                 let updatedAt = df.date(from: "2022/08/17T00:00:00")!
-                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: corectSize.width)!)
+                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: srcWidth)!)
                 let scribble = Scribble.with { s in
                     s.width = corectSize.width
                     s.height = corectSize.height
@@ -86,7 +86,7 @@ public class ScribbleConverter {
                             }
                             return result
                         },
-                        scale: 1.0
+                        scale: corectSize.width / srcWidth
                     ) + getLines(
                         strokes: a.strokes.filter{
                             let createdAt = df.date(from: String($0.createdAt.prefix(19)));
