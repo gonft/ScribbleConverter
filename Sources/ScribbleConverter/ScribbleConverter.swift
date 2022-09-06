@@ -67,13 +67,16 @@ public class ScribbleConverter {
     ///   - corectSize: 정확한 배경 이미지 사이즈
     /// - Returns: 머지된 Scribble 필기 데이터
     public static func fixScribble(origin: Data, src: Data, srcWidth: CGFloat, corectSize: CGSize) -> Data? {
+        print("srcWidth: \(srcWidth), corectSize: \(corectSize)")
         do {
             if #available(iOS 14.0, *) {
                 let a = try Scribble.init(serializedData: src)
                 let df = DateFormatter()
                 df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-                let updatedAt = df.date(from: "2022/08/17T00:00:00")!
-                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: srcWidth)!)
+                let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: corectSize.width)!)
+                let latestCreatedAt = originScribble.strokes.sorted(by: {$0.createdAt > $1.createdAt}).first?.createdAt
+                let updatedAt = latestCreatedAt != nil ? df.date(from: String(latestCreatedAt!.prefix(19)))! : df.date(from: "2022/08/18T00:00:00")!
+                print("l: \(latestCreatedAt), u: \(updatedAt)")
                 let scribble = Scribble.with { s in
                     s.width = corectSize.width
                     s.height = corectSize.height
@@ -86,7 +89,7 @@ public class ScribbleConverter {
                             }
                             return result
                         },
-                        scale: corectSize.width / srcWidth
+                        scale: 1.0
                     ) + getLines(
                         strokes: a.strokes.filter{
                             let createdAt = df.date(from: String($0.createdAt.prefix(19)));
