@@ -76,7 +76,7 @@ public class ScribbleConverter {
                 let originScribble = try Scribble.init(serializedData: scribbleFrom(drawingData: origin, imageWidth: corectSize.width)!)
                 let latestCreatedAt = originScribble.strokes.sorted(by: {$0.createdAt > $1.createdAt}).first?.createdAt
                 let updatedAt = latestCreatedAt != nil ? df.date(from: String(latestCreatedAt!.prefix(19)))! : df.date(from: "2022/08/18T00:00:00")!
-                print("l: \(latestCreatedAt), u: \(updatedAt)")
+                print("l: \(latestCreatedAt ?? ""), u: \(updatedAt)")
                 let scribble = Scribble.with { s in
                     s.width = corectSize.width
                     s.height = corectSize.height
